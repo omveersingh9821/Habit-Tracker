@@ -5,7 +5,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 
 require('dotenv').config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 6800;
 
 const db = require('./config/mongoose');
 
