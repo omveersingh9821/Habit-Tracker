@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 
 // connect to the database
-mongoose.connect(`mongodb://0.0.0/${process.env.DB}`); 
+//STEP 2
+mongoose.connect(process.env.MONGODB_URI || "mongodb://0.0.0/habit-tracker"); 
 // mongoose.connect(env.db);
 
 // acquire the connection to check if it is successfull

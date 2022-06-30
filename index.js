@@ -5,6 +5,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 
 require('dotenv').config();
+
+//STEP 1
 const PORT = process.env.PORT || 6800;
 
 const db = require('./config/mongoose');
@@ -17,6 +19,11 @@ app.set('view engine', 'ejs');
 //body-parser
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+
+//STEP 3
+if(process.env.NODE_ENV == 'production'){
+    app.use(express.static('client/build'));
+}
 
 //Express Session
 app.use(
