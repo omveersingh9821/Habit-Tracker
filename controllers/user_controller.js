@@ -6,35 +6,19 @@ module.exports.userRegistration = function(req,res){
     const errors = [];
     //check required fields
     if(!name || !email ){
-        errors.push({msg:'Please fill in all fields'});
+        res.redirect('back');
     }
-    
-    if(errors.length > 0){
-        res.render('register',{
-            errors,
-            name,
-            email,
-            title:'Sign Up'
-        });
-
-    }else{
+    else{
         //validation passed
         User.findOne({email:email})
         .then(user => {
             if(user){
                 //user exists
-                errors.push({msg:'Email is already registered'});
-                res.render('register',{
-                    errors,
-                    name,
-                    email,
-                    title:'Sign Up'
-                });
+                res.redirect('/users/login');
             }else{
                 const newUser = new User({name,email});
                 newUser.save()
                 .then(user => {
-                    req.flash('success_msg','You are now registered and can log in');
                     res.redirect('/users/login');
 
                 })
@@ -57,11 +41,9 @@ module.exports.logIn = (req,res,next)=>{
         email: email
     }).then(user => {
         if (!user) {
-            let errors = [];
-            errors.push({ msg: 'This email is not registered' });
+           
             res.render('login', {
                 title:'Login',
-                errors,
                 name,
                 email
             });
